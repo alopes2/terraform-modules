@@ -7,7 +7,7 @@ resource "aws_sqs_queue" "deadletter" {
   name  = "${var.name}-queue-dlq"
   redrive_allow_policy = jsonencode({
     redrivePermission = "byQueue",
-    sourceQueueArns   = [aws_sqs_queue.aws_sqs_queue.arn]
+    sourceQueueArns   = [aws_sqs_queue.queue.arn]
   })
 }
 
