@@ -1,4 +1,4 @@
-variable "queue_name" {
+variable "name" {
   type        = string
   description = "The Lambda function language runtime"
 }
@@ -22,4 +22,11 @@ variable "account_id" {
 variable "allowed_services" {
   type        = list(string)
   description = "The services that are allowed to send messages to this SQS queue"
+  default     = []
+}
+
+variable "fanout" {
+  type        = bool
+  description = "If it should use fanout pattern with SNS"
+  default     = false
 }

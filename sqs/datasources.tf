@@ -1,8 +1,12 @@
+locals {
+  allowed_service = concat([aws_sns_topic.topic.arn], var.allowed_services)
+}
+
 data "aws_iam_policy_document" "sqs-queue-policy" {
-  policy_id = "arn:aws:sqs:${var.region}:${var.account_id}:${var.queue_name}/SQSDefaultPolicy"
+  policy_id = "arn:aws:sqs:${var.region}:${var.account_id}:${var.name}/SQSDefaultPolicy"
 
   statement {
-    sid    = "${var.queue_name}-allow-send-messages"
+    sid    = "${var.name}-allow-send-messages"
     effect = "Allow"
 
     principals {
@@ -15,14 +19,14 @@ data "aws_iam_policy_document" "sqs-queue-policy" {
     ]
 
     resources = [
-      "arn:aws:sqs:${var.region}:${var.account_id}:${var.queue_name}",
+      "arn:aws:sqs:${var.region}:${var.account_id}:${var.name}",
     ]
 
     condition {
       test     = "ArnEquals"
       variable = "aws:SourceArn"
 
-      values = var.allowed_services
+      values = local.allowed_service
     }
   }
 }
