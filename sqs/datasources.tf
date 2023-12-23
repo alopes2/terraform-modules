@@ -1,5 +1,5 @@
 locals {
-  allowed_service = var.fanout ? concat([aws_sns_topic.topic.arn], var.allowed_services) : var.allowed_services
+  allowed_service = var.fanout ? concat([aws_sns_topic.topic[0].arn], var.allowed_services) : var.allowed_services
 }
 
 data "aws_iam_policy_document" "sqs-queue-policy" {

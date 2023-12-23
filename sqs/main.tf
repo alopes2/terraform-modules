@@ -18,7 +18,7 @@ resource "aws_sns_topic" "topic" {
 
 resource "aws_sns_topic_subscription" "topic_subscription" {
   count                = var.fanout ? 1 : 0
-  topic_arn            = aws_sns_topic.topic.arn
+  topic_arn            = aws_sns_topic.topic[0].arn
   protocol             = "sqs"
   endpoint             = aws_sqs_queue.queue.arn
   raw_message_delivery = true
