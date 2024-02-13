@@ -1,5 +1,6 @@
 resource "aws_sqs_queue" "queue" {
   name = "${var.name}-queue"
+  policy = data.aws_iam_policy_document.sqs-queue-policy.json
 }
 
 resource "aws_sqs_queue" "deadletter" {
